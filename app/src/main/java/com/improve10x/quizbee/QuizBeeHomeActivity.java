@@ -21,7 +21,7 @@ public class QuizBeeHomeActivity extends AppCompatActivity {
 
     private void handleStartBtn() {
         binding.startBtn.setOnClickListener(v -> {
-            if (binding.nameTxt.getText().toString().equals("") == false) {
+            if (binding.nameTxt.getText().toString().trim().equals("") == false) {
                 Intent intent = new Intent(QuizBeeHomeActivity.this,
                         QuestionsActivity.class);
                 startActivity(intent);
