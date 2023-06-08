@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.improve10x.quizbee.databinding.ActivityQuizBeeHomeBinding;
+import com.improve10x.quizbee.questionsscreen.QuestionsActivity;
 
 public class QuizBeeHomeActivity extends AppCompatActivity {
 
