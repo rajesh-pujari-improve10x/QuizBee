@@ -1,5 +1,7 @@
 package com.improve10x.quizbee.questionsscreen;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -19,6 +21,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
 
     private OnItemActionListener onItemActionListener;
 
+    int selectedQuestionPosition = 0;
+
     void setData(List<Question> questions) {
         this.questions = questions;
         notifyDataSetChanged();
@@ -37,12 +41,19 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull QuestionViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Question question = questions.get(position);
         holder.binding.questionNumTxt.setText(String.valueOf(position + 1));
         holder.binding.getRoot().setOnClickListener(v -> {
+            selectedQuestionPosition = position;
+            notifyDataSetChanged();
             onItemActionListener.onClick(question);
         });
+        if (selectedQuestionPosition == position) {
+            holder.binding.questionNumTxt.setTextColor(Color.parseColor("#F44336"));
+        } else {
+            holder.binding.questionNumTxt.setTextColor(Color.parseColor("#FFFFFF"));
+        }
     }
 
     @Override

@@ -27,6 +27,8 @@ public class QuestionsActivity extends BaseActivity {
 
     private List<Question> questions = new ArrayList<>();
 
+    private int currentQuestionPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,8 @@ public class QuestionsActivity extends BaseActivity {
         fetchQuestionsData();
         setupQuestionsAdapter();
         setupQuestionNumsRv();
+        handleNextBtn();
+        handlePreviousBtn();
     }
 
     private void setupQuestionNumsRv() {
@@ -76,5 +80,36 @@ public class QuestionsActivity extends BaseActivity {
         binding.secAnsRb.setText(question.getAnswers().get(1));
         binding.thirdAnsRb.setText(question.getAnswers().get(2));
         binding.fourthAnsRb.setText(question.getAnswers().get(3));
+    }
+
+    private void handleNextBtn() {
+        binding.nextBtn.setOnClickListener(v -> {
+            try {
+                currentQuestionPosition = questionsAdapter.selectedQuestionPosition;
+                currentQuestionPosition++;
+                Question question = questions.get(currentQuestionPosition);
+                showQuestionData(question);
+                questionsAdapter.selectedQuestionPosition = currentQuestionPosition;
+                questionsAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                Toast.makeText(this, "Questions Completed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void handlePreviousBtn() {
+        binding.previousBtn.setOnClickListener(v -> {
+            try {
+                currentQuestionPosition = questionsAdapter.selectedQuestionPosition;
+                currentQuestionPosition--;
+                Question question = questions.get(currentQuestionPosition);
+                showQuestionData(question);
+                questionsAdapter.selectedQuestionPosition = currentQuestionPosition;
+                questionsAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                Toast.makeText(this, "No Previous Question", Toast.LENGTH_SHORT).show();
+            }
+            
+        });
     }
 }
